@@ -30,3 +30,10 @@ The half-open interval used by `inWindow(seq, start, end)` cannot represent a wi
 - `addSeq(seq, offset)` — add a signed offset modulo 2^32
 - `distance(from, to)` — forward distance modulo 2^32
 - `inWindow(seq, start, end)` — true when `seq` is in the half-open interval `[start, end)`
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
